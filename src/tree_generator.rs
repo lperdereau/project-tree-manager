@@ -62,32 +62,44 @@ impl Tree {
 }
 
 impl TreeElement {
-    fn create(&self, base_path: &str) -> Result<(), std::io::Error> {
-        let result = match self {
+    fn create(&self, base_path: &str) {
+        match self {
             TreeElement::Folder(folder) => TreeElement::create_folder(folder, base_path),
             TreeElement::Project(project) => TreeElement::create_project(project, base_path),
         };
-        result
     }
 
-    fn create_folder(folder: &Folder, base_path: &str) -> Result<(), std::io::Error> {
-        let result = fs::create_dir(format!(
+    fn create_folder(folder: &Folder, base_path: &str) {
+        fs::create_dir(format!(
             "{base_path}/{folder_name}",
             folder_name = folder.name
-        ));
+        ))
+        .expect("Error to create folder");
 
         let folder_path = format!("{base_path}/{folder_name}", folder_name = folder.name);
         for tree_elements in &folder.childs {
-            return tree_elements.create(&folder_path);
+            tree_elements.create(&folder_path);
         }
-        result
     }
 
-    fn create_project(project: &Project, base_path: &str) -> Result<(), std::io::Error> {
-        fs::create_dir(format!(
-            "{base_path}/{project_name}",
-            project_name = project.name
-        ))
+    fn create_project(project: &Project, base_path: &str) {
+        let path = format!("{base_path}/{project_name}", project_name = project.name);
+        let mut cb = git2::RemoteCallbacks::new();
+        let git_config = git2::Config::open_default().unwrap();
+        let mut ch = git2_credentials::CredentialHandler::new(git_config);
+        cb.credentials(move |url, username, allowed| {
+            ch.try_next_credential(url, username, allowed)
+        });
+
+        let mut fo = git2::FetchOptions::new();
+        fo.remote_callbacks(cb)
+            .download_tags(git2::AutotagOption::All)
+            .update_fetchhead(true);
+
+        git2::build::RepoBuilder::new()
+            .fetch_options(fo)
+            .clone(project.source.as_str(), std::path::Path::new(&path))
+            .expect("Error to clone repository");
     }
 }
 

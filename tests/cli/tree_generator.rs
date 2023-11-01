@@ -17,7 +17,7 @@ fn create_tree_from_yaml() {
     kind: project
 
 - name: test
-  src: git@github.com:lperdereau/project-tree-manager.git
+  src: https://github.com/lperdereau/project-tree-manager.git
   kind: project
 "#;
 
@@ -41,14 +41,14 @@ fn create_tree_from_json() {
         "childs": [
             {
                 "name": "test",
-                "src": "git@github.com:lperdereau/project-tre-manager.git",
+                "src": "git@github.com:lperdereau/project-tree-manager.git",
                 "kind": "project"
             }
         ]
     },
     {
         "name": "test",
-        "src": "git@github.com:lperdereau/project-tre-manager.git",
+        "src": "https://github.com/lperdereau/project-tree-manager.git",
         "kind": "project"
     }
 ]"#;
