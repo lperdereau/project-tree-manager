@@ -1,4 +1,7 @@
 # project-tree-manager
+[![Build and release](https://github.com/lperdereau/project-tree-manager/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/lperdereau/project-tree-manager/actions/workflows/release.yaml)
+[![semantic-release: angular](https://img.shields.io/badge/semantic--release-angular-e10079?logo=semantic-release)](https://github.com/semantic-release/semantic-release)
+
 
 This project aims to clone all of your git repositories reporting to a config file.
 
