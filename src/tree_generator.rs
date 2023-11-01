@@ -70,20 +70,26 @@ impl TreeElement {
     }
 
     fn create_folder(folder: &Folder, base_path: &str) {
-        fs::create_dir(format!(
-            "{base_path}/{folder_name}",
-            folder_name = folder.name
-        ))
-        .expect("Error to create folder");
+        let path = std::path::Path::new(base_path)
+            .join(&folder.name)
+            .as_path()
+            .display()
+            .to_string();
 
-        let folder_path = format!("{base_path}/{folder_name}", folder_name = folder.name);
+        fs::create_dir(&path).expect("Error to create folder");
+
         for tree_elements in &folder.childs {
-            tree_elements.create(&folder_path);
+            tree_elements.create(&path);
         }
     }
 
     fn create_project(project: &Project, base_path: &str) {
-        let path = format!("{base_path}/{project_name}", project_name = project.name);
+        let path = std::path::Path::new(base_path)
+            .join(&project.name)
+            .as_path()
+            .display()
+            .to_string();
+
         let mut cb = git2::RemoteCallbacks::new();
         let git_config = git2::Config::open_default().unwrap();
         let mut ch = git2_credentials::CredentialHandler::new(git_config);
