@@ -19,14 +19,14 @@ for target in "${TARGETS[@]}" ; do
     NAME=${target%%:*}
     TARGET=${target#*:}
   echo "[+]   $NAME:"
+  rustup -q target add $TARGET
   echo "[-]    - build"
 
   [ "$TARGET" == *"windows"* ] && SUFFIX=".exe"
 
-  rustup -q target add $TARGET
-  RUSTFLAGS='-C target-feature=+crt-static' cargo build --target $TARGET --out-dir dist -Z unstable-options --release --bins --locked -q
+  RUSTFLAGS='-C target-feature=+crt-static' cargo build --target $TARGET --release --bins --locked -q
 
-  mv dist/$BIN dist/$BIN-$NAME
+  mv target/$TARGET/release/$BIN dist/$BIN-$NAME
   if [ -z "$NOCOMPRESS" ]; then
     echo "[-]    - compress"
     if [ "$GOOS" = "windows" ]; then
