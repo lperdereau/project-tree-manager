@@ -1,4 +1,5 @@
 # project-tree-manager
+[![Build and release](https://github.com/lperdereau/project-tree-manager/actions/workflows/release.yaml/badge.svg?branch=main)](https://github.com/lperdereau/project-tree-manager/actions/workflows/release.yaml)
 
 This project aims to clone all of your git repositories reporting to a config file.
 
