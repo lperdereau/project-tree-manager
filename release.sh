@@ -1,5 +1,5 @@
 #!/bin/bash
-set -xeo pipefail
+set -eo pipefail
 
 echo "[*] rust builds:"
 
@@ -38,3 +38,9 @@ for target in "${TARGETS[@]}" ; do
     fi
   fi
 done
+
+echo "[*] sha256sum"
+(cd dist; sha256sum *) | tee ${BINBASE}.sha256sum
+mv ${BINBASE}.sha256sum dist/
+
+echo "[*] done"
