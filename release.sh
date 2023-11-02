@@ -1,40 +1,37 @@
 #!/bin/bash
-set -eo pipefail
+set -exo pipefail
 
 echo "[*] rust builds:"
 
-BIN="project-tree-manager"
+BIN=$(grep name Cargo.toml | cut -d\  -f3 | tr -d '\"')
 
 TARGETS=(
-    "x86_64-linux:x86_64-unknown-linux-gnu"
-    "aarch64-linux:aarch64-unknown-linux-gnu"
-    "x86_64-macos:x86_64-apple-darwin"
-    "x86_64-windows:x86_64-pc-windows-msvc"
-    "aarch64-macos:aarch64-apple-darwin"
+    "x86_64-linux"
+    "aarch64-linux"
+    "x86_64-windows"
+    "x86_64-macos"
+    "aarch64-macos"
 )
 
 [ -d dist ] && rm -rf dist
 mkdir dist
 
-for target in "${TARGETS[@]}" ; do
-    NAME=${target%%:*}
-    TARGET=${target#*:}
-  echo "[+]   $NAME:"
-  rustup -q target add $TARGET
-  echo "[-]    - build"
+for TARGET in "${TARGETS[@]}" ; do
+  echo "[+]   $TARGET:"
+  SUFFIX=""
 
-  [ "$TARGET" == *"windows"* ] && SUFFIX=".exe"
+  [[ "$TARGET" =~ .*"windows".* ]] && SUFFIX=".exe"
+  NAME=${BIN}-${TARGET}${SUFFIX}
 
-  RUSTFLAGS='-C target-feature=+crt-static' cargo build --target $TARGET --release --bins --locked -q
+  mv bin-${TARGET}/${BIN}${SUFFIX} dist/$NAME
 
-  mv target/$TARGET/release/$BIN dist/$BIN-$NAME
   if [ -z "$NOCOMPRESS" ]; then
     echo "[-]    - compress"
-    if [ "$GOOS" = "windows" ]; then
-      xz --keep dist/$BIN-${NAME}/${SUFFIX}
-      (cd dist; zip -qm9 $BIN-${NAME}.zip $BIN-${NAME}${SUFFIX})
+    if [[ "$TARGET" =~ .*"windows".* ]]; then
+      xz --keep dist/$NAME
+      (cd dist; zip -qm9 $BIN-${TARGET}.zip $NAME)
     else
-      xz dist/$BIN-${NAME}
+      xz dist/$NAME
     fi
   fi
 done
