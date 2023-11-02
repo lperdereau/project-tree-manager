@@ -6,13 +6,12 @@ on:
       - main
 
 jobs:
-  permissions:
+  build-and-release:
+    runs-on: "ubuntu-latest"
+    permissions:
       issues: write
       contents: write
       pull-requests: write
-  build-and-release:
-    runs-on: "ubuntu-latest"
-
     steps:
       - name: Check out repository code
         uses: actions/checkout@v4
