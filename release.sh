@@ -1,14 +1,15 @@
 #!/bin/bash
+set -xeuo pipefail
 
 echo "[*] rust builds:"
 
 BIN="project-tree-manager"
 
 TARGETS=(
-    # "x86_64-linux:x86_64-unknown-linux-gnu"
-    # "aarch64-linux:aarch64-unknown-linux-gnu"
-    # "x86_64-macos:x86_64-apple-darwin"
-    # "x86_64-windows:x86_64-pc-windows-msvc"
+    "x86_64-linux:x86_64-unknown-linux-gnu"
+    "aarch64-linux:aarch64-unknown-linux-gnu"
+    "x86_64-macos:x86_64-apple-darwin"
+    "x86_64-windows:x86_64-pc-windows-msvc"
     "aarch64-macos:aarch64-apple-darwin"
 )
 
