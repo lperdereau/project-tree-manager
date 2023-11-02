@@ -1,0 +1,20 @@
+name: Versioning
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  versioning:
+    runs-on: "ubuntu-latest"
+    permissions:
+      issues: write
+      contents: write
+      pull-requests: write
+    step:
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v4
+        with:
+          extends: |
+            @google/semantic-release-replace-plugin
