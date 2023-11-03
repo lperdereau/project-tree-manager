@@ -37,7 +37,7 @@ for TARGET in "${TARGETS[@]}" ; do
 done
 
 echo "[*] sha256sum"
-(cd dist; sha256sum *) | tee ${BINBASE}.sha256sum
-mv ${BINBASE}.sha256sum dist/
+(cd dist; sha256sum *) | tee ${BIN}.sha256sum
+mv ${BIN}.sha256sum dist/
 
 echo "[*] done"

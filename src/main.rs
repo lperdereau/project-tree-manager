@@ -14,8 +14,9 @@ fn main() {
                 .unwrap_or_else(|e| e.exit());
             generate(config, folder)
         }
-        Some(("update", _)) => {
-            update()
+        Some(("update", sub_matches)) => {
+            let force = sub_matches.get_flag("force");
+            update(force)
         }
         _ => unreachable!(),
     }

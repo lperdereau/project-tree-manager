@@ -16,6 +16,13 @@ pub fn commands() -> Vec<Command<'static>> {
 
 fn update_cli() -> Command<'static> {
     Command::new("update")
+        .arg(
+            Arg::new("force")
+                .short('f')
+                .long("force")
+                .help("Enforce update of the binairie even if it's up to date.")
+                .action(clap::ArgAction::SetTrue)
+        )
         .about("Download new binary from github release and replace inplace the binary")
 }
 
