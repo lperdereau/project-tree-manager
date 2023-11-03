@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/lperdereau/project-tree-manager/compare/v1.0.0...v1.1.0) (2023-11-03)
+
+
+### Features
+
+* Add self-update command ([cada6dc](https://github.com/lperdereau/project-tree-manager/commit/cada6dcf90ea203dbc70951cc244fe897eb80a3a))
+
 # 1.0.0 (2023-11-03)
 
 
