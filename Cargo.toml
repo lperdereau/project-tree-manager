@@ -6,17 +6,23 @@ edition = "2021"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-git2 = {version="0.18", features = ["vendored-libgit2", "vendored-openssl"]}
+git2 = { version = "0.18", features = ["vendored-libgit2", "vendored-openssl"] }
 git2_credentials = "0.13"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 serde_yaml = "0.9"
-clap = { version = "3.1.16", features = ["derive", "env", "cargo", "wrap_help"] }
+clap = { version = "3.1.16", features = [
+    "derive",
+    "env",
+    "cargo",
+    "wrap_help",
+] }
 self_update = "0.39.0"
 reqwest = "0.11.22"
 termimad = "0.26.0"
 xz = "0.1.0"
 semver = "1.0.20"
+sha256 = "1.0.3"
 
 [dev-dependencies]
 glob = "0.3.1"
