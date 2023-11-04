@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/lperdereau/project-tree-manager/compare/v1.1.0...v1.1.1) (2023-11-04)
+
+
+### Bug Fixes
+
+* Add checksum to update feature ([8232c0e](https://github.com/lperdereau/project-tree-manager/commit/8232c0efffde065a8444b64dde5572ff8be9f765))
+
 # [1.1.0](https://github.com/lperdereau/project-tree-manager/compare/v1.0.0...v1.1.0) (2023-11-03)
 
 
