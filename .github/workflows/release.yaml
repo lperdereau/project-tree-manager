@@ -130,7 +130,7 @@ jobs:
         uses: actions/download-artifact@v3
       - name: Prepare release
         run: |
-          ./release.sh
+          ./scripts/release.sh
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v3
         env:
