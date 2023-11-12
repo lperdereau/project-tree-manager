@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/lperdereau/project-tree-manager/compare/v1.1.1...v1.1.2) (2023-11-12)
+
+
+### Bug Fixes
+
+* Project restructure ([08bc7f9](https://github.com/lperdereau/project-tree-manager/commit/08bc7f9b25d4ac31b21691516c57840bdff2011c))
+
 ## [1.1.1](https://github.com/lperdereau/project-tree-manager/compare/v1.1.0...v1.1.1) (2023-11-04)
 
 
