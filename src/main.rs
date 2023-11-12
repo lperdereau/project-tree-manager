@@ -1,6 +1,6 @@
-use project_tree_manager::cli::cli;
-use project_tree_manager::generate::generate;
-use project_tree_manager::update::update;
+use project_tree_manager::cli;
+use project_tree_manager::generate;
+use project_tree_manager::update;
 
 fn main() {
     let matches = cli().get_matches();

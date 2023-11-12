@@ -21,7 +21,7 @@ fn update_cli() -> Command<'static> {
                 .short('f')
                 .long("force")
                 .help("Enforce update of the binairie even if it's up to date.")
-                .action(clap::ArgAction::SetTrue)
+                .action(clap::ArgAction::SetTrue),
         )
         .about("Download new binary from github release and replace inplace the binary")
 }

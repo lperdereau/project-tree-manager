@@ -1,13 +1,13 @@
 use serde::Deserialize;
-use std::fs;
+use std::{fs, path::Path, str::FromStr, vec};
 
 pub struct Tree {
-    childs: Vec<TreeElement>,
+    pub(crate) childs: Vec<TreeElement>,
 }
 
 #[derive(Debug, Deserialize)]
 #[serde(tag = "kind", rename_all = "lowercase")]
-enum TreeElement {
+pub enum TreeElement {
     Project(Project),
     Folder(Folder),
 }
@@ -59,10 +59,14 @@ impl Tree {
         }
         count
     }
+
+    pub fn childs(&self) -> &Vec<TreeElement> {
+        &self.childs
+    }
 }
 
 impl TreeElement {
-    fn create(&self, base_path: &str) {
+    pub fn create(&self, base_path: &str) {
         match self {
             TreeElement::Folder(folder) => TreeElement::create_folder(folder, base_path),
             TreeElement::Project(project) => TreeElement::create_project(project, base_path),
@@ -106,15 +110,5 @@ impl TreeElement {
             .fetch_options(fo)
             .clone(project.source.as_str(), std::path::Path::new(&path))
             .expect("Error to clone repository");
-    }
-}
-
-pub struct TreeGenerator {}
-
-impl TreeGenerator {
-    pub fn create(tree: &Tree, base_path: &str) {
-        for tree_elements in &tree.childs {
-            let _ = tree_elements.create(base_path);
-        }
     }
 }

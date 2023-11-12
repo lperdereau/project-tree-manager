@@ -1,6 +1,6 @@
 use crate::helpers::generate_base_path;
 use glob::glob;
-use project_tree_manager::tree_generator::{Tree, TreeGenerator};
+use project_tree_manager::generate::{Tree, TreeGenerator};
 use std::fs;
 
 #[test]

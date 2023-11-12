@@ -1,5 +1,8 @@
-pub mod cli;
-mod file;
+mod cli;
 pub mod generate;
-pub mod tree_generator;
-pub mod update;
+mod update;
+mod utils;
+
+pub use cli::cli;
+pub use generate::generate;
+pub use update::update;
