@@ -1,6 +1,7 @@
 use project_tree_manager::cli;
 use project_tree_manager::generate;
 use project_tree_manager::update;
+use project_tree_manager::reader;
 
 fn main() {
     let matches = cli().get_matches();
@@ -17,6 +18,12 @@ fn main() {
         Some(("update", sub_matches)) => {
             let force = sub_matches.get_flag("force");
             update(force)
+        }
+        Some(("read", sub_matches)) => {
+            let folder = &sub_matches
+                .value_of_t::<String>("folder")
+                .unwrap_or_else(|e| e.exit());
+            reader(folder)
         }
         _ => unreachable!(),
     }

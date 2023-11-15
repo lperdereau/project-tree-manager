@@ -5,21 +5,21 @@ pub struct Tree {
     pub(crate) childs: Vec<TreeElement>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 #[serde(tag = "kind", rename_all = "lowercase")]
 pub enum TreeElement {
     Project(Project),
     Folder(Folder),
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Project {
     #[serde(alias = "src")]
     source: String,
     name: String,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Clone)]
 pub struct Folder {
     name: String,
     childs: Vec<TreeElement>,
@@ -35,6 +35,16 @@ impl Folder {
             }
         }
         count
+    }
+
+    pub fn childs_folder(&self) -> Vec<&Folder> {
+        self.childs
+            .iter()
+            .filter_map(|e| match e {
+                TreeElement::Folder(folder) => Some(folder),
+                _ => None,
+            })
+            .collect()
     }
 }
 
@@ -62,6 +72,51 @@ impl Tree {
 
     pub fn childs(&self) -> &Vec<TreeElement> {
         &self.childs
+    }
+
+    pub fn childs_folder(&self) -> Vec<&Folder> {
+        self.childs
+            .iter()
+            .filter_map(|e| match e {
+                TreeElement::Folder(folder) => Some(folder),
+                _ => None,
+            })
+            .collect()
+    }
+
+    pub fn build_from_path(&self, path: &str) {
+        let paths: Vec<&str> = path.split("/").collect();
+        let rev_paths: Vec<&str> = paths.into_iter().rev().collect();
+
+        let folder: Option<Folder> = None;
+    }
+
+    pub fn get_or_create_folder(&self, path: &str) -> Folder {
+        let paths: Vec<&str> = path.split("/").collect();
+        let mut childs = &self.childs;
+        let mut folder: Option<Folder> = None;
+
+        for path in paths {
+            if let Some(index) = childs.iter().position(|element| match element {
+                TreeElement::Folder(folder) if folder.name == path => true,
+                _ => false,
+            }) {
+                childs = folder.childs
+            }
+
+            match folder {
+                Some(f) => childs = &f.childs,
+                None => {
+                    let f = Folder {
+                        name: String::from_str(path).unwrap(),
+                        childs: vec![],
+                    };
+                    folder = Some(f)
+                }
+            }
+        }
+
+        folder.unwrap().clone()
     }
 }
 

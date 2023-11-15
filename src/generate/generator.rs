@@ -19,4 +19,8 @@ impl TreeGenerator {
             let _ = tree_elements.create(base_path);
         }
     }
+
+    pub fn read(base_path: &str) -> Tree {
+        unimplemented!()
+    }
 }
