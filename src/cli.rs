@@ -1,5 +1,6 @@
 use clap::{crate_authors, crate_description, crate_name, crate_version, Arg, Command};
 
+
 pub fn cli() -> Command<'static> {
     Command::new(crate_name!())
         .version(crate_version!())
@@ -11,7 +12,7 @@ pub fn cli() -> Command<'static> {
 }
 
 pub fn commands() -> Vec<Command<'static>> {
-    vec![update_cli(), generate_cli()]
+    vec![update_cli(), generate_cli(), reader_cli()]
 }
 
 fn update_cli() -> Command<'static> {
@@ -22,6 +23,31 @@ fn update_cli() -> Command<'static> {
                 .long("force")
                 .help("Enforce update of the binairie even if it's up to date.")
                 .action(clap::ArgAction::SetTrue),
+        )
+        .about("Download new binary from github release and replace inplace the binary")
+}
+
+fn reader_cli() -> Command<'static> {
+    Command::new("read")
+        .arg(
+            Arg::new("folder")
+                .short('f')
+                .long("dest-folder")
+                .value_name("DEST_FOLDER")
+                .help("Destination folder read to generate config.")
+                .value_parser(clap::builder::NonEmptyStringValueParser::new())
+                .required(true)
+                .takes_value(true),
+        )
+        .arg(
+            Arg::new("output")
+                .short('o')
+                .long("output-format")
+                .value_name("DEST_FOLDER")
+                .help("The output format, yaml or json.")
+                .value_parser(clap::builder::NonEmptyStringValueParser::new())
+                .required(true)
+                .takes_value(true),
         )
         .about("Download new binary from github release and replace inplace the binary")
 }

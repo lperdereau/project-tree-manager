@@ -1,5 +1,6 @@
 use project_tree_manager::cli;
 use project_tree_manager::generate;
+use project_tree_manager::record;
 use project_tree_manager::update;
 
 fn main() {
@@ -17,6 +18,16 @@ fn main() {
         Some(("update", sub_matches)) => {
             let force = sub_matches.get_flag("force");
             update(force)
+        }
+        Some(("read", sub_matches)) => {
+            let folder = &sub_matches
+                .value_of_t::<String>("folder")
+                .unwrap_or_else(|e| e.exit());
+            let output = &sub_matches
+                .value_of_t::<String>("output")
+                .unwrap_or_else(|e| e.exit());
+
+            println!("{}", record(output, folder));
         }
         _ => unreachable!(),
     }
