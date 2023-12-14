@@ -1,7 +1,7 @@
 use project_tree_manager::cli;
 use project_tree_manager::generate;
+use project_tree_manager::record;
 use project_tree_manager::update;
-use project_tree_manager::reader;
 
 fn main() {
     let matches = cli().get_matches();
@@ -23,7 +23,11 @@ fn main() {
             let folder = &sub_matches
                 .value_of_t::<String>("folder")
                 .unwrap_or_else(|e| e.exit());
-            reader(folder)
+            let output = &sub_matches
+                .value_of_t::<String>("output")
+                .unwrap_or_else(|e| e.exit());
+
+            println!("{}", record(output, folder));
         }
         _ => unreachable!(),
     }

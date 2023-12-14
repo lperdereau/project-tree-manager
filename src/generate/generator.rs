@@ -11,16 +11,27 @@ pub fn generate(file_path: &str, folder_path: &str) {
     TreeGenerator::create(&tree, folder_path)
 }
 
+pub fn record(file_type: &str, folder_path: &str) -> String {
+    let tree = TreeGenerator::read(folder_path);
+    match file_type {
+        "json" => tree.to_json(),
+        "yaml" => tree.to_yaml(),
+        _ => panic!("FileType unknown"),
+    }
+}
+
 pub struct TreeGenerator {}
 
 impl TreeGenerator {
     pub fn create(tree: &Tree, base_path: &str) {
-        for tree_elements in tree.childs() {
+        for tree_elements in &tree.childs {
             let _ = tree_elements.create(base_path);
         }
     }
 
     pub fn read(base_path: &str) -> Tree {
-        unimplemented!()
+        let mut tree = Tree::new();
+        tree.build_from_path(base_path);
+        tree
     }
 }

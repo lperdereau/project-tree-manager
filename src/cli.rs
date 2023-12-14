@@ -1,5 +1,6 @@
 use clap::{crate_authors, crate_description, crate_name, crate_version, Arg, Command};
 
+
 pub fn cli() -> Command<'static> {
     Command::new(crate_name!())
         .version(crate_version!())
@@ -34,6 +35,16 @@ fn reader_cli() -> Command<'static> {
                 .long("dest-folder")
                 .value_name("DEST_FOLDER")
                 .help("Destination folder read to generate config.")
+                .value_parser(clap::builder::NonEmptyStringValueParser::new())
+                .required(true)
+                .takes_value(true),
+        )
+        .arg(
+            Arg::new("output")
+                .short('o')
+                .long("output-format")
+                .value_name("DEST_FOLDER")
+                .help("The output format, yaml or json.")
                 .value_parser(clap::builder::NonEmptyStringValueParser::new())
                 .required(true)
                 .takes_value(true),

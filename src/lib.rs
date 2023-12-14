@@ -5,5 +5,5 @@ mod utils;
 
 pub use cli::cli;
 pub use generate::generate;
-pub use generate::reader;
+pub use generate::record;
 pub use update::update;
